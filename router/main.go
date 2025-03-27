@@ -3,16 +3,26 @@ package router
 import (
 	"embed"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"one-api/common"
+	"one-api/middleware"
 	"os"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
+	router.Use(middleware.CORS())
+
+	// Swagger文档路由
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	// 其他路由设置
+	SetWebRouter(router, buildFS, indexPage)
 	SetApiRouter(router)
-	SetDashboardRouter(router)
 	SetRelayRouter(router)
 	SetVideoRouter(router)
 	frontendBaseUrl := os.Getenv("FRONTEND_BASE_URL")
@@ -28,4 +38,5 @@ func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 			c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("%s%s", frontendBaseUrl, c.Request.RequestURI))
 		})
 	}
+	SetDashboardRouter(router)
 }
