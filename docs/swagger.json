@@ -1,45 +1,3547 @@
 {
-  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "Channel": {
+        "properties": {
+          "balance": {
+            "description": "余额",
+            "type": "number"
+          },
+          "baseURL": {
+            "description": "基础URL",
+            "type": "string"
+          },
+          "disabled": {
+            "description": "是否禁用",
+            "type": "boolean"
+          },
+          "group": {
+            "description": "渠道组",
+            "type": "string"
+          },
+          "id": {
+            "description": "渠道ID",
+            "type": "integer"
+          },
+          "key": {
+            "description": "渠道密钥",
+            "type": "string"
+          },
+          "models": {
+            "description": "支持的模型",
+            "type": "string"
+          },
+          "name": {
+            "description": "渠道名称",
+            "type": "string"
+          },
+          "priority": {
+            "description": "优先级",
+            "type": "integer"
+          },
+          "tag": {
+            "description": "标签",
+            "type": "string"
+          },
+          "type": {
+            "description": "渠道类型",
+            "type": "integer"
+          },
+          "weight": {
+            "description": "权重",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Log": {
+        "properties": {
+          "channelId": {
+            "description": "渠道ID",
+            "type": "integer"
+          },
+          "content": {
+            "description": "日志内容",
+            "type": "string"
+          },
+          "created": {
+            "description": "创建时间",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "日志ID",
+            "type": "integer"
+          },
+          "model": {
+            "description": "使用的模型",
+            "type": "string"
+          },
+          "quota": {
+            "description": "消耗的配额",
+            "type": "number"
+          },
+          "status": {
+            "description": "状态",
+            "type": "integer"
+          },
+          "tokenId": {
+            "description": "令牌ID",
+            "type": "integer"
+          },
+          "tokens": {
+            "description": "使用的令牌数量",
+            "type": "integer"
+          },
+          "type": {
+            "description": "日志类型",
+            "type": "integer"
+          },
+          "userId": {
+            "description": "用户ID",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "LoginRequest": {
+        "properties": {
+          "password": {
+            "description": "密码",
+            "example": "password",
+            "type": "string"
+          },
+          "username": {
+            "description": "用户名",
+            "example": "admin",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object"
+      },
+      "MidjourneyDto": {
+        "properties": {
+          "message": {
+            "description": "响应消息",
+            "type": "string"
+          },
+          "status": {
+            "description": "任务状态",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "MidjourneyRequest": {
+        "properties": {
+          "customId": {
+            "description": "自定义ID",
+            "type": "string"
+          },
+          "prompt": {
+            "description": "提示词",
+            "type": "string"
+          }
+        },
+        "required": [
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "MidjourneyResponse": {
+        "properties": {
+          "image": {
+            "description": "生成的图片",
+            "format": "binary",
+            "type": "string"
+          },
+          "message": {
+            "description": "响应消息",
+            "type": "string"
+          },
+          "status": {
+            "description": "任务状态",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Pricing": {
+        "properties": {
+          "models": {
+            "description": "模型价格列表",
+            "items": {
+              "properties": {
+                "group": {
+                  "description": "模型组",
+                  "type": "string"
+                },
+                "input": {
+                  "description": "输入价格",
+                  "type": "number"
+                },
+                "name": {
+                  "description": "模型名称",
+                  "type": "string"
+                },
+                "output": {
+                  "description": "输出价格",
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "QuotaData": {
+        "properties": {
+          "date": {
+            "description": "日期",
+            "format": "date",
+            "type": "string"
+          },
+          "quota": {
+            "description": "使用配额",
+            "type": "number"
+          },
+          "userId": {
+            "description": "用户ID",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Response": {
+        "properties": {
+          "data": {
+            "description": "响应数据",
+            "type": "object"
+          },
+          "message": {
+            "description": "响应消息",
+            "example": "操作成功",
+            "type": "string"
+          },
+          "success": {
+            "description": "是否成功",
+            "example": true,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "Task": {
+        "properties": {
+          "id": {
+            "description": "任务ID",
+            "type": "string"
+          },
+          "message": {
+            "description": "响应消息",
+            "type": "string"
+          },
+          "status": {
+            "description": "任务状态",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Token": {
+        "properties": {
+          "expiredTime": {
+            "description": "过期时间",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "令牌ID",
+            "type": "integer"
+          },
+          "key": {
+            "description": "令牌密钥",
+            "type": "string"
+          },
+          "models": {
+            "description": "允许使用的模型",
+            "type": "string"
+          },
+          "name": {
+            "description": "令牌名称",
+            "type": "string"
+          },
+          "remainQuota": {
+            "description": "剩余配额",
+            "type": "number"
+          },
+          "status": {
+            "description": "令牌状态",
+            "type": "integer"
+          },
+          "userId": {
+            "description": "所属用户ID",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopUpRequest": {
+        "properties": {
+          "key": {
+            "description": "充值卡密",
+            "example": "1234abcd",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "type": "object"
+      },
+      "TransferAffQuotaRequest": {
+        "properties": {
+          "quota": {
+            "description": "要转移的配额数量",
+            "example": 100,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "quota"
+        ],
+        "type": "object"
+      },
+      "UpdateUserSettingRequest": {
+        "properties": {
+          "notification_email": {
+            "description": "通知邮箱",
+            "type": "string"
+          },
+          "notify_type": {
+            "description": "通知类型",
+            "example": "email",
+            "type": "string"
+          },
+          "quota_warning_threshold": {
+            "description": "配额警告阈值",
+            "example": 10,
+            "type": "number"
+          },
+          "webhook_secret": {
+            "description": "Webhook 密钥",
+            "type": "string"
+          },
+          "webhook_url": {
+            "description": "Webhook URL",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "User": {
+        "properties": {
+          "affCode": {
+            "description": "邀请码",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "显示名称",
+            "type": "string"
+          },
+          "email": {
+            "description": "邮箱",
+            "type": "string"
+          },
+          "group": {
+            "description": "用户组",
+            "type": "integer"
+          },
+          "id": {
+            "description": "用户ID",
+            "type": "integer"
+          },
+          "inviterId": {
+            "description": "邀请人ID",
+            "type": "integer"
+          },
+          "password": {
+            "description": "密码",
+            "type": "string"
+          },
+          "quota": {
+            "description": "配额",
+            "type": "number"
+          },
+          "role": {
+            "description": "角色",
+            "type": "integer"
+          },
+          "status": {
+            "description": "状态",
+            "type": "integer"
+          },
+          "username": {
+            "description": "用户名",
+            "type": "string"
+          },
+          "verificationCode": {
+            "description": "验证码",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "bearerFormat": "JWT",
+        "description": "在请求头中添加 'Authorization: Bearer {token}' 进行认证",
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "SessionAuth": {
+        "description": "通过会话Cookie进行认证",
+        "in": "cookie",
+        "name": "session",
+        "type": "apiKey"
+      }
+    }
+  },
   "info": {
-    "description": "One API是一个统一的API网关，支持多个LLM模型和服务集成",
-    "title": "One API服务",
     "contact": {
       "name": "API Support",
       "url": "https://github.com/Calcium-Ion/new-api"
     },
+    "description": "One API是一个统一的API网关，支持多个LLM模型和服务集成",
     "license": {
       "name": "MIT",
       "url": "https://github.com/Calcium-Ion/new-api/blob/main/LICENSE"
     },
+    "title": "One API服务",
     "version": "1.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/api",
-      "description": "本地开发服务器"
-    }
-  ],
+  "openapi": "3.0.0",
   "paths": {
+    "/about": {
+      "get": {
+        "description": "获取关于信息",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回关于信息"
+          }
+        },
+        "summary": "获取关于信息",
+        "tags": [
+          "系统信息"
+        ]
+      }
+    },
+    "/channel": {
+      "get": {
+        "description": "获取系统中所有的渠道信息（分页）",
+        "parameters": [
+          {
+            "description": "页码，默认为1",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量，默认为10",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Channel"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回渠道列表"
+          }
+        },
+        "summary": "获取所有渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      },
+      "post": {
+        "description": "添加新的渠道",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Channel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "添加成功"
+          }
+        },
+        "summary": "添加渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      },
+      "put": {
+        "description": "更新已有渠道的信息",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Channel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "更新成功"
+          }
+        },
+        "summary": "更新渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/channel/fetch_models/{id}": {
+      "get": {
+        "description": "获取指定渠道支持的模型列表",
+        "parameters": [
+          {
+            "description": "渠道ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "模型列表"
+          }
+        },
+        "summary": "获取渠道模型",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/channel/search": {
+      "get": {
+        "description": "根据条件搜索渠道",
+        "parameters": [
+          {
+            "description": "搜索关键词",
+            "in": "query",
+            "name": "key",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "页码，默认为1",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量，默认为10",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Channel"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回渠道列表"
+          }
+        },
+        "summary": "搜索渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/channel/test/{id}": {
+      "get": {
+        "description": "测试指定渠道是否可用",
+        "parameters": [
+          {
+            "description": "渠道ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "测试结果"
+          }
+        },
+        "summary": "测试渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/channel/update_balance/{id}": {
+      "get": {
+        "description": "更新指定渠道的余额",
+        "parameters": [
+          {
+            "description": "渠道ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "更新结果"
+          }
+        },
+        "summary": "更新渠道余额",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/channel/{id}": {
+      "delete": {
+        "description": "删除指定的渠道",
+        "parameters": [
+          {
+            "description": "渠道ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "删除成功"
+          }
+        },
+        "summary": "删除渠道",
+        "tags": [
+          "渠道管理"
+        ]
+      },
+      "get": {
+        "description": "获取指定渠道的详细信息",
+        "parameters": [
+          {
+            "description": "渠道ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Channel"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回渠道信息"
+          }
+        },
+        "summary": "获取渠道信息",
+        "tags": [
+          "渠道管理"
+        ]
+      }
+    },
+    "/data": {
+      "get": {
+        "description": "管理员获取所有配额日期数据",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/QuotaData"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回配额数据"
+          }
+        },
+        "summary": "获取所有配额数据",
+        "tags": [
+          "数据统计"
+        ]
+      }
+    },
+    "/data/self": {
+      "get": {
+        "description": "获取当前用户的配额日期数据",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/QuotaData"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回配额数据"
+          }
+        },
+        "summary": "获取个人配额数据",
+        "tags": [
+          "数据统计"
+        ]
+      }
+    },
+    "/group": {
+      "get": {
+        "description": "管理员获取所有用户组",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "description": "用户组ID",
+                                "type": "integer"
+                              },
+                              "name": {
+                                "description": "用户组名称",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取所有用户组"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取所有用户组",
+        "tags": [
+          "用户组管理"
+        ]
+      }
+    },
+    "/log": {
+      "delete": {
+        "description": "删除历史日志",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "删除成功"
+          }
+        },
+        "summary": "删除历史日志",
+        "tags": [
+          "日志管理"
+        ]
+      },
+      "get": {
+        "description": "管理员获取所有日志",
+        "parameters": [
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Log"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回日志列表"
+          }
+        },
+        "summary": "获取所有日志",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/log/search": {
+      "get": {
+        "description": "管理员搜索日志",
+        "parameters": [
+          {
+            "description": "搜索关键词",
+            "in": "query",
+            "name": "keyword",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Log"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回搜索结果"
+          }
+        },
+        "summary": "搜索日志",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/log/self": {
+      "get": {
+        "description": "获取当前用户的日志",
+        "parameters": [
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Log"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回日志列表"
+          }
+        },
+        "summary": "获取个人日志",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/log/self/search": {
+      "get": {
+        "description": "搜索当前用户的日志",
+        "parameters": [
+          {
+            "description": "搜索关键词",
+            "in": "query",
+            "name": "keyword",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Log"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回搜索结果"
+          }
+        },
+        "summary": "搜索个人日志",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/log/self/stat": {
+      "get": {
+        "description": "获取当前用户的日志统计信息",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回统计信息"
+          }
+        },
+        "summary": "个人日志统计",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/log/stat": {
+      "get": {
+        "description": "获取日志统计信息",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回统计信息"
+          }
+        },
+        "summary": "日志统计",
+        "tags": [
+          "日志管理"
+        ]
+      }
+    },
+    "/mj/image/{id}": {
+      "get": {
+        "description": "获取MidJourney图片",
+        "parameters": [
+          {
+            "description": "任务ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/png": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "获取图片成功"
+          }
+        },
+        "summary": "获取MJ图片",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/submit/action": {
+      "post": {
+        "description": "提交MidJourney自定义动作",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MidjourneyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MidjourneyResponse"
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "提交MJ动作",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/submit/blend": {
+      "post": {
+        "description": "提交MidJourney混合请求",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "base64Array": {
+                    "description": "Base64编码的图片数组",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "customId": {
+                    "description": "自定义ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "base64Array"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MidjourneyResponse"
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "提交MJ混合",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/submit/change": {
+      "post": {
+        "description": "提交MidJourney变更请求",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "action": {
+                    "description": "操作类型",
+                    "enum": [
+                      "UPSCALE",
+                      "VARIATION",
+                      "REROLL"
+                    ],
+                    "type": "string"
+                  },
+                  "customId": {
+                    "description": "自定义ID",
+                    "type": "string"
+                  },
+                  "index": {
+                    "description": "操作索引",
+                    "type": "integer"
+                  },
+                  "taskId": {
+                    "description": "任务ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "taskId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MidjourneyResponse"
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "提交MJ变更",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/submit/describe": {
+      "post": {
+        "description": "提交MidJourney描述请求",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "base64": {
+                    "description": "Base64编码的图片",
+                    "format": "byte",
+                    "type": "string"
+                  },
+                  "customId": {
+                    "description": "自定义ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "base64"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MidjourneyResponse"
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "提交MJ描述",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/submit/imagine": {
+      "post": {
+        "description": "提交MidJourney绘图请求",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "customId": {
+                    "description": "自定义ID",
+                    "type": "string"
+                  },
+                  "prompt": {
+                    "description": "提示词",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MidjourneyResponse"
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "提交MJ绘图",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/mj/task/{id}/fetch": {
+      "get": {
+        "description": "获取MidJourney任务状态",
+        "parameters": [
+          {
+            "description": "任务ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MidjourneyDto"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "获取任务成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "获取MJ任务",
+        "tags": [
+          "MidJourney服务"
+        ]
+      }
+    },
+    "/models": {
+      "get": {
+        "description": "获取可用的模型列表",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回模型列表"
+          }
+        },
+        "summary": "获取模型列表",
+        "tags": [
+          "模型管理"
+        ]
+      }
+    },
+    "/notice": {
+      "get": {
+        "description": "获取系统公告",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回公告信息"
+          }
+        },
+        "summary": "获取公告",
+        "tags": [
+          "系统信息"
+        ]
+      }
+    },
+    "/oauth/email/bind": {
+      "get": {
+        "description": "绑定邮箱账号",
+        "parameters": [
+          {
+            "description": "邮箱验证码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "绑定成功"
+          }
+        },
+        "summary": "邮箱账号绑定",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/github": {
+      "get": {
+        "description": "通过GitHub进行OAuth授权",
+        "parameters": [
+          {
+            "description": "GitHub授权码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "授权成功"
+          }
+        },
+        "summary": "GitHub授权",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/linuxdo": {
+      "get": {
+        "description": "通过LinuxDO进行OAuth授权",
+        "parameters": [
+          {
+            "description": "LinuxDO授权码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "授权成功"
+          }
+        },
+        "summary": "LinuxDO授权",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/oidc": {
+      "get": {
+        "description": "通过OIDC进行认证",
+        "parameters": [
+          {
+            "description": "OIDC授权码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "认证成功"
+          }
+        },
+        "summary": "OIDC认证",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/state": {
+      "get": {
+        "description": "生成OAuth授权状态码",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "description": "OAuth状态码",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功生成状态码"
+          }
+        },
+        "summary": "生成OAuth状态码",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/telegram/bind": {
+      "get": {
+        "description": "绑定Telegram账号",
+        "parameters": [
+          {
+            "description": "Telegram用户ID",
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Telegram验证哈希",
+            "in": "query",
+            "name": "hash",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "绑定成功"
+          }
+        },
+        "summary": "Telegram账号绑定",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/telegram/login": {
+      "get": {
+        "description": "通过Telegram进行登录",
+        "parameters": [
+          {
+            "description": "Telegram用户ID",
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Telegram验证哈希",
+            "in": "query",
+            "name": "hash",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "登录成功"
+          }
+        },
+        "summary": "Telegram登录",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/wechat": {
+      "get": {
+        "description": "通过微信进行OAuth授权",
+        "parameters": [
+          {
+            "description": "微信授权码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "授权成功"
+          }
+        },
+        "summary": "微信授权",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/oauth/wechat/bind": {
+      "get": {
+        "description": "绑定微信账号",
+        "parameters": [
+          {
+            "description": "微信授权码",
+            "in": "query",
+            "name": "code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "绑定成功"
+          }
+        },
+        "summary": "微信账号绑定",
+        "tags": [
+          "OAuth认证"
+        ]
+      }
+    },
+    "/option": {
+      "get": {
+        "description": "获取系统选项",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "options": {
+                              "items": {
+                                "properties": {
+                                  "key": {
+                                    "description": "选项键",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "description": "选项值",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取系统选项"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取系统选项",
+        "tags": [
+          "系统管理"
+        ]
+      },
+      "put": {
+        "description": "更新系统选项",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "options": {
+                    "items": {
+                      "properties": {
+                        "key": {
+                          "description": "选项键",
+                          "type": "string"
+                        },
+                        "value": {
+                          "description": "选项值",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "options"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "更新系统选项成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "更新系统选项",
+        "tags": [
+          "系统管理"
+        ]
+      }
+    },
+    "/option/rest_model_ratio": {
+      "post": {
+        "description": "重置模型比率",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "重置模型比率成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "重置模型比率",
+        "tags": [
+          "系统管理"
+        ]
+      }
+    },
+    "/pricing": {
+      "get": {
+        "description": "获取价格信息",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Pricing"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回价格信息"
+          }
+        },
+        "summary": "获取价格信息",
+        "tags": [
+          "系统信息"
+        ]
+      }
+    },
+    "/redemption": {
+      "get": {
+        "description": "获取所有充值码",
+        "parameters": [
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "properties": {
+                              "code": {
+                                "description": "充值码",
+                                "type": "string"
+                              },
+                              "created_time": {
+                                "description": "创建时间",
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              "id": {
+                                "description": "充值码ID",
+                                "type": "integer"
+                              },
+                              "quota": {
+                                "description": "配额金额",
+                                "type": "number"
+                              },
+                              "status": {
+                                "description": "状态",
+                                "type": "integer"
+                              },
+                              "used_time": {
+                                "description": "使用时间",
+                                "format": "date-time",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取充值码列表"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取充值码列表",
+        "tags": [
+          "充值码管理"
+        ]
+      },
+      "post": {
+        "description": "添加新的充值码",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "description": "充值码",
+                    "type": "string"
+                  },
+                  "quota": {
+                    "description": "配额金额",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "code",
+                  "quota"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "添加充值码成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "添加充值码",
+        "tags": [
+          "充值码管理"
+        ]
+      },
+      "put": {
+        "description": "更新充值码信息",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "description": "充值码",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "充值码ID",
+                    "type": "integer"
+                  },
+                  "quota": {
+                    "description": "配额金额",
+                    "type": "number"
+                  },
+                  "status": {
+                    "description": "状态",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "更新充值码成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "更新充值码",
+        "tags": [
+          "充值码管理"
+        ]
+      }
+    },
+    "/redemption/search": {
+      "get": {
+        "description": "搜索充值码",
+        "parameters": [
+          {
+            "description": "搜索关键词",
+            "in": "query",
+            "name": "keyword",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "properties": {
+                              "code": {
+                                "description": "充值码",
+                                "type": "string"
+                              },
+                              "created_time": {
+                                "description": "创建时间",
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              "id": {
+                                "description": "充值码ID",
+                                "type": "integer"
+                              },
+                              "quota": {
+                                "description": "配额金额",
+                                "type": "number"
+                              },
+                              "status": {
+                                "description": "状态",
+                                "type": "integer"
+                              },
+                              "used_time": {
+                                "description": "使用时间",
+                                "format": "date-time",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "搜索充值码成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "搜索充值码",
+        "tags": [
+          "充值码管理"
+        ]
+      }
+    },
+    "/redemption/{id}": {
+      "delete": {
+        "description": "删除指定充值码",
+        "parameters": [
+          {
+            "description": "充值码ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "删除充值码成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "删除充值码",
+        "tags": [
+          "充值码管理"
+        ]
+      },
+      "get": {
+        "description": "获取指定充值码信息",
+        "parameters": [
+          {
+            "description": "充值码ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "code": {
+                              "description": "充值码",
+                              "type": "string"
+                            },
+                            "created_time": {
+                              "description": "创建时间",
+                              "format": "date-time",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "充值码ID",
+                              "type": "integer"
+                            },
+                            "quota": {
+                              "description": "配额金额",
+                              "type": "number"
+                            },
+                            "status": {
+                              "description": "状态",
+                              "type": "integer"
+                            },
+                            "used_time": {
+                              "description": "使用时间",
+                              "format": "date-time",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取充值码信息"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取充值码信息",
+        "tags": [
+          "充值码管理"
+        ]
+      }
+    },
+    "/reset_password": {
+      "get": {
+        "description": "发送密码重置邮件",
+        "parameters": [
+          {
+            "description": "用户邮箱",
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "重置邮件发送成功"
+          }
+        },
+        "summary": "发送密码重置邮件",
+        "tags": [
+          "账户验证"
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "description": "获取系统状态",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回系统状态"
+          }
+        },
+        "summary": "获取系统状态",
+        "tags": [
+          "系统信息"
+        ]
+      }
+    },
+    "/suno/fetch": {
+      "post": {
+        "description": "批量获取Suno任务状态",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "task_ids": {
+                    "description": "任务ID列表",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "task_ids"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Task"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "获取成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "批量获取任务",
+        "tags": [
+          "Suno服务"
+        ]
+      }
+    },
+    "/suno/fetch/{id}": {
+      "get": {
+        "description": "获取单个Suno任务状态",
+        "parameters": [
+          {
+            "description": "任务ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Task"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "获取成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "获取任务状态",
+        "tags": [
+          "Suno服务"
+        ]
+      }
+    },
+    "/suno/submit/lyrics": {
+      "post": {
+        "description": "提交Suno歌词生成任务",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "prompt": {
+                    "description": "歌词提示词",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "task_id": {
+                              "description": "任务ID",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "生成歌词",
+        "tags": [
+          "Suno服务"
+        ]
+      }
+    },
+    "/suno/submit/music": {
+      "post": {
+        "description": "提交Suno音乐生成任务",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "prompt": {
+                    "description": "音乐提示词",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "task_id": {
+                              "description": "任务ID",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "提交成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "生成音乐",
+        "tags": [
+          "Suno服务"
+        ]
+      }
+    },
+    "/task": {
+      "get": {
+        "description": "管理员获取所有任务",
+        "parameters": [
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "平台",
+            "in": "query",
+            "name": "platform",
+            "schema": {
+              "enum": [
+                "suno",
+                "mj"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "用户ID",
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务ID",
+            "in": "query",
+            "name": "task_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务状态",
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "enum": [
+                "NOT_START",
+                "SUBMITTED",
+                "QUEUED",
+                "IN_PROGRESS",
+                "FAILURE",
+                "SUCCESS",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务操作类型",
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "开始时间戳",
+            "in": "query",
+            "name": "start_timestamp",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "结束时间戳",
+            "in": "query",
+            "name": "end_timestamp",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Task"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取所有任务"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取所有任务",
+        "tags": [
+          "任务管理"
+        ]
+      }
+    },
+    "/task/self": {
+      "get": {
+        "description": "获取当前用户的任务",
+        "parameters": [
+          {
+            "description": "页码，从0开始",
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "平台",
+            "in": "query",
+            "name": "platform",
+            "schema": {
+              "enum": [
+                "suno",
+                "mj"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务ID",
+            "in": "query",
+            "name": "task_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务状态",
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "enum": [
+                "NOT_START",
+                "SUBMITTED",
+                "QUEUED",
+                "IN_PROGRESS",
+                "FAILURE",
+                "SUCCESS",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "任务操作类型",
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "开始时间戳",
+            "in": "query",
+            "name": "start_timestamp",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "结束时间戳",
+            "in": "query",
+            "name": "end_timestamp",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Task"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取用户任务"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "获取用户任务",
+        "tags": [
+          "任务管理"
+        ]
+      }
+    },
+    "/token": {
+      "get": {
+        "description": "获取用户的所有令牌",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/Token"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回令牌列表"
+          }
+        },
+        "summary": "获取所有令牌",
+        "tags": [
+          "令牌管理"
+        ]
+      },
+      "post": {
+        "description": "创建新的令牌",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Token"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "创建成功"
+          }
+        },
+        "summary": "创建令牌",
+        "tags": [
+          "令牌管理"
+        ]
+      },
+      "put": {
+        "description": "更新现有令牌",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Token"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "更新成功"
+          }
+        },
+        "summary": "更新令牌",
+        "tags": [
+          "令牌管理"
+        ]
+      }
+    },
+    "/token/{id}": {
+      "delete": {
+        "description": "删除指定的令牌",
+        "parameters": [
+          {
+            "description": "令牌ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "删除成功"
+          }
+        },
+        "summary": "删除令牌",
+        "tags": [
+          "令牌管理"
+        ]
+      },
+      "get": {
+        "description": "获取指定令牌的详细信息",
+        "parameters": [
+          {
+            "description": "令牌ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Token"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回令牌信息"
+          }
+        },
+        "summary": "获取令牌信息",
+        "tags": [
+          "令牌管理"
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "description": "管理员获取所有用户信息（分页）",
+        "parameters": [
+          {
+            "description": "页码，默认为1",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "每页数量，默认为10",
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "$ref": "#/components/schemas/User"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回用户列表"
+          }
+        },
+        "summary": "获取所有用户",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/user/aff": {
+      "get": {
+        "description": "获取用户的邀请码",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功返回邀请码"
+          }
+        },
+        "summary": "获取邀请码",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/user/aff_transfer": {
+      "post": {
+        "description": "转移邀请配额",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferAffQuotaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "配额转移成功"
+          }
+        },
+        "summary": "转移邀请配额",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/user/amount": {
+      "post": {
+        "description": "请求充值金额",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "description": "充值金额",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "amount"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "充值请求成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "充值金额",
+        "tags": [
+          "支付管理"
+        ]
+      }
+    },
+    "/user/epay/notify": {
+      "get": {
+        "description": "支付通知回调",
+        "parameters": [
+          {
+            "description": "订单ID",
+            "in": "query",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "支付状态",
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "支付回调处理成功"
+          }
+        },
+        "summary": "支付通知",
+        "tags": [
+          "支付管理"
+        ]
+      }
+    },
+    "/user/groups": {
+      "get": {
+        "description": "获取用户组列表",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "description": "用户组ID",
+                                "type": "integer"
+                              },
+                              "name": {
+                                "description": "用户组名称",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取用户组列表"
+          }
+        },
+        "summary": "获取用户组",
+        "tags": [
+          "用户组管理"
+        ]
+      }
+    },
     "/user/login": {
       "post": {
         "description": "用户通过用户名和密码登录",
-        "tags": [
-          "用户管理"
-        ],
-        "summary": "用户登录",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "成功登录返回用户信息",
             "content": {
               "application/json": {
                 "schema": {
@@ -48,214 +3550,208 @@
                       "$ref": "#/components/schemas/Response"
                     },
                     {
-                      "type": "object",
                       "properties": {
                         "data": {
                           "$ref": "#/components/schemas/User"
                         }
-                      }
+                      },
+                      "type": "object"
                     }
                   ]
                 }
               }
-            }
+            },
+            "description": "成功登录返回用户信息"
           }
-        }
+        },
+        "summary": "用户登录",
+        "tags": [
+          "用户管理"
+        ]
       }
     },
     "/user/logout": {
       "get": {
         "description": "用户登出，清除会话",
-        "tags": [
-          "用户管理"
-        ],
-        "summary": "登出系统",
         "responses": {
           "200": {
-            "description": "成功登出",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response"
                 }
               }
-            }
+            },
+            "description": "成功登出"
           }
-        }
+        },
+        "summary": "登出系统",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/user/pay": {
+      "post": {
+        "description": "请求创建支付订单",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "description": "支付金额",
+                    "type": "number"
+                  },
+                  "pay_type": {
+                    "description": "支付类型",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "pay_type"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "order_id": {
+                              "description": "订单ID",
+                              "type": "string"
+                            },
+                            "pay_url": {
+                              "description": "支付URL",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "创建支付订单成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "SessionAuth": []
+          }
+        ],
+        "summary": "创建支付订单",
+        "tags": [
+          "支付管理"
+        ]
       }
     },
     "/user/register": {
       "post": {
         "description": "新用户注册系统",
-        "tags": [
-          "用户管理"
-        ],
-        "summary": "用户注册",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/User"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "注册成功",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response"
                 }
               }
-            }
+            },
+            "description": "注册成功"
           }
-        }
-      }
-    },
-    "/user": {
-      "get": {
-        "description": "管理员获取所有用户信息（分页）",
+        },
+        "summary": "用户注册",
         "tags": [
           "用户管理"
-        ],
-        "summary": "获取所有用户",
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "description": "页码，默认为1",
-            "schema": {
-              "type": "integer"
+        ]
+      }
+    },
+    "/user/reset": {
+      "post": {
+        "description": "重置用户密码",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "description": "用户邮箱",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "新密码",
+                    "type": "string"
+                  },
+                  "token": {
+                    "description": "重置令牌",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "token",
+                  "password"
+                ],
+                "type": "object"
+              }
             }
           },
-          {
-            "name": "page_size",
-            "in": "query",
-            "description": "每页数量，默认为10",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "成功返回用户列表",
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Response"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/User"
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Response"
                 }
               }
-            }
+            },
+            "description": "密码重置成功"
           }
-        }
-      }
-    },
-    "/user/{id}": {
-      "get": {
-        "description": "获取指定用户的信息",
+        },
+        "summary": "重置密码",
         "tags": [
-          "用户管理"
-        ],
-        "summary": "获取用户信息",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "用户ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功返回用户信息",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Response"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/User"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/token": {
-      "get": {
-        "description": "为当前用户生成API访问令牌",
-        "tags": [
-          "用户管理"
-        ],
-        "summary": "生成访问令牌",
-        "responses": {
-          "200": {
-            "description": "成功返回访问令牌",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Response"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
+          "账户验证"
+        ]
       }
     },
     "/user/self": {
       "get": {
         "description": "获取当前登录用户的信息",
-        "tags": [
-          "用户管理"
-        ],
-        "summary": "获取个人信息",
         "responses": {
           "200": {
-            "description": "成功返回用户信息",
             "content": {
               "application/json": {
                 "schema": {
@@ -264,154 +3760,116 @@
                       "$ref": "#/components/schemas/Response"
                     },
                     {
-                      "type": "object",
                       "properties": {
                         "data": {
                           "$ref": "#/components/schemas/User"
                         }
-                      }
+                      },
+                      "type": "object"
                     }
                   ]
                 }
               }
-            }
+            },
+            "description": "成功返回用户信息"
           }
-        }
+        },
+        "summary": "获取个人信息",
+        "tags": [
+          "用户管理"
+        ]
       }
     },
-    "/channel": {
+    "/user/self/groups": {
       "get": {
-        "description": "获取系统中所有的渠道信息（分页）",
-        "tags": [
-          "渠道管理"
-        ],
-        "summary": "获取所有渠道",
-        "parameters": [
+        "description": "获取当前用户所属用户组",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "description": "用户组ID",
+                                "type": "integer"
+                              },
+                              "name": {
+                                "description": "用户组名称",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "成功获取当前用户组"
+          }
+        },
+        "security": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "页码，默认为1",
-            "schema": {
-              "type": "integer"
-            }
+            "BearerAuth": []
           },
           {
-            "name": "page_size",
-            "in": "query",
-            "description": "每页数量，默认为10",
-            "schema": {
-              "type": "integer"
-            }
+            "SessionAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "成功返回渠道列表",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Response"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Channel"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "添加新的渠道",
+        "summary": "获取当前用户组",
         "tags": [
-          "渠道管理"
-        ],
-        "summary": "添加渠道",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Channel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "添加成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
-              }
-            }
-          }
-        }
-      },
+          "用户组管理"
+        ]
+      }
+    },
+    "/user/setting": {
       "put": {
-        "description": "更新已有渠道的信息",
-        "tags": [
-          "渠道管理"
-        ],
-        "summary": "更新渠道",
+        "description": "更新用户设置",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Channel"
+                "$ref": "#/components/schemas/UpdateUserSettingRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "更新成功",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response"
                 }
               }
-            }
+            },
+            "description": "设置更新成功"
           }
-        }
+        },
+        "summary": "更新用户设置",
+        "tags": [
+          "用户管理"
+        ]
       }
     },
-    "/channel/{id}": {
+    "/user/token": {
       "get": {
-        "description": "获取指定渠道的详细信息",
-        "tags": [
-          "渠道管理"
-        ],
-        "summary": "获取渠道信息",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "渠道ID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
+        "description": "为当前用户生成API访问令牌",
         "responses": {
           "200": {
-            "description": "成功返回渠道信息",
             "content": {
               "application/json": {
                 "schema": {
@@ -420,31 +3878,65 @@
                       "$ref": "#/components/schemas/Response"
                     },
                     {
-                      "type": "object",
                       "properties": {
                         "data": {
-                          "$ref": "#/components/schemas/Channel"
+                          "type": "string"
                         }
-                      }
+                      },
+                      "type": "object"
                     }
                   ]
                 }
               }
-            }
+            },
+            "description": "成功返回访问令牌"
           }
-        }
-      },
-      "delete": {
-        "description": "删除指定的渠道",
+        },
+        "summary": "生成访问令牌",
         "tags": [
-          "渠道管理"
-        ],
-        "summary": "删除渠道",
+          "用户管理"
+        ]
+      }
+    },
+    "/user/topup": {
+      "post": {
+        "description": "用户充值",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopUpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "充值成功"
+          }
+        },
+        "summary": "用户充值",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "description": "获取指定用户的信息",
         "parameters": [
           {
-            "name": "id",
+            "description": "用户ID",
             "in": "path",
-            "description": "渠道ID",
+            "name": "id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -453,240 +3945,316 @@
         ],
         "responses": {
           "200": {
-            "description": "删除成功",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Response"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
                 }
               }
-            }
+            },
+            "description": "成功返回用户信息"
           }
-        }
+        },
+        "summary": "获取用户信息",
+        "tags": [
+          "用户管理"
+        ]
       }
     },
-    "/channel/search": {
-      "get": {
-        "description": "根据条件搜索渠道",
-        "tags": [
-          "渠道管理"
+    "/v1/chat/completions": {
+      "post": {
+        "description": "创建聊天补全",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "max_tokens": {
+                    "description": "最大生成长度",
+                    "type": "integer"
+                  },
+                  "messages": {
+                    "description": "对话消息列表",
+                    "items": {
+                      "properties": {
+                        "content": {
+                          "description": "消息内容",
+                          "type": "string"
+                        },
+                        "role": {
+                          "description": "消息角色",
+                          "enum": [
+                            "system",
+                            "user",
+                            "assistant",
+                            "function"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "content"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "model": {
+                    "description": "模型ID",
+                    "type": "string"
+                  },
+                  "n": {
+                    "description": "生成数量",
+                    "type": "integer"
+                  },
+                  "stream": {
+                    "description": "是否流式输出",
+                    "type": "boolean"
+                  },
+                  "temperature": {
+                    "description": "采样温度",
+                    "type": "number"
+                  },
+                  "top_p": {
+                    "description": "核采样",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "model",
+                  "messages"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "choices": {
+                      "items": {
+                        "properties": {
+                          "finish_reason": {
+                            "description": "结束原因",
+                            "type": "string"
+                          },
+                          "index": {
+                            "description": "选择索引",
+                            "type": "integer"
+                          },
+                          "message": {
+                            "properties": {
+                              "content": {
+                                "description": "消息内容",
+                                "type": "string"
+                              },
+                              "role": {
+                                "description": "消息角色",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "created": {
+                      "description": "创建时间戳",
+                      "type": "integer"
+                    },
+                    "id": {
+                      "description": "响应ID",
+                      "type": "string"
+                    },
+                    "object": {
+                      "description": "对象类型",
+                      "type": "string"
+                    },
+                    "usage": {
+                      "properties": {
+                        "completion_tokens": {
+                          "description": "补全令牌数",
+                          "type": "integer"
+                        },
+                        "prompt_tokens": {
+                          "description": "提示词令牌数",
+                          "type": "integer"
+                        },
+                        "total_tokens": {
+                          "description": "总令牌数",
+                          "type": "integer"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "聊天补全成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
-        "summary": "搜索渠道",
+        "summary": "聊天补全",
+        "tags": [
+          "OpenAI兼容"
+        ]
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "description": "获取可用模型列表",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "模型ID",
+                            "type": "string"
+                          },
+                          "object": {
+                            "description": "对象类型",
+                            "type": "string"
+                          },
+                          "owned_by": {
+                            "description": "模型所有者",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "获取模型列表成功"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "获取模型列表",
+        "tags": [
+          "OpenAI兼容"
+        ]
+      }
+    },
+    "/v1/models/{model}": {
+      "get": {
+        "description": "获取特定模型信息",
         "parameters": [
           {
-            "name": "key",
-            "in": "query",
-            "description": "搜索关键词",
+            "description": "模型ID",
+            "in": "path",
+            "name": "model",
+            "required": true,
             "schema": {
               "type": "string"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "description": "模型ID",
+                      "type": "string"
+                    },
+                    "object": {
+                      "description": "对象类型",
+                      "type": "string"
+                    },
+                    "owned_by": {
+                      "description": "模型所有者",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "获取模型信息成功"
+          }
+        },
+        "security": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "页码，默认为1",
-            "schema": {
-              "type": "integer"
-            }
-          },
+            "BearerAuth": []
+          }
+        ],
+        "summary": "获取模型信息",
+        "tags": [
+          "OpenAI兼容"
+        ]
+      }
+    },
+    "/verification": {
+      "get": {
+        "description": "发送邮箱验证码",
+        "parameters": [
           {
-            "name": "page_size",
+            "description": "用户邮箱",
             "in": "query",
-            "description": "每页数量，默认为10",
+            "name": "email",
+            "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "成功返回渠道列表",
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Response"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Channel"
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Response"
                 }
               }
-            }
+            },
+            "description": "验证码发送成功"
           }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Response": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true,
-            "description": "是否成功"
-          },
-          "message": {
-            "type": "string",
-            "example": "操作成功",
-            "description": "响应消息"
-          },
-          "data": {
-            "type": "object",
-            "description": "响应数据"
-          }
-        }
-      },
-      "LoginRequest": {
-        "type": "object",
-        "required": [
-          "username",
-          "password"
-        ],
-        "properties": {
-          "username": {
-            "type": "string",
-            "example": "admin",
-            "description": "用户名"
-          },
-          "password": {
-            "type": "string",
-            "example": "password",
-            "description": "密码"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "用户ID"
-          },
-          "username": {
-            "type": "string",
-            "description": "用户名"
-          },
-          "password": {
-            "type": "string",
-            "description": "密码"
-          },
-          "displayName": {
-            "type": "string",
-            "description": "显示名称"
-          },
-          "email": {
-            "type": "string",
-            "description": "邮箱"
-          },
-          "role": {
-            "type": "integer",
-            "description": "角色"
-          },
-          "status": {
-            "type": "integer",
-            "description": "状态"
-          },
-          "quota": {
-            "type": "number",
-            "description": "配额"
-          },
-          "group": {
-            "type": "integer",
-            "description": "用户组"
-          },
-          "affCode": {
-            "type": "string",
-            "description": "邀请码"
-          },
-          "inviterId": {
-            "type": "integer",
-            "description": "邀请人ID"
-          },
-          "verificationCode": {
-            "type": "string",
-            "description": "验证码"
-          }
-        }
-      },
-      "Channel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "渠道ID"
-          },
-          "name": {
-            "type": "string",
-            "description": "渠道名称"
-          },
-          "type": {
-            "type": "integer",
-            "description": "渠道类型"
-          },
-          "key": {
-            "type": "string",
-            "description": "渠道密钥"
-          },
-          "baseURL": {
-            "type": "string",
-            "description": "基础URL"
-          },
-          "models": {
-            "type": "string",
-            "description": "支持的模型"
-          },
-          "group": {
-            "type": "string",
-            "description": "渠道组"
-          },
-          "weight": {
-            "type": "integer",
-            "description": "权重"
-          },
-          "priority": {
-            "type": "integer",
-            "description": "优先级"
-          },
-          "balance": {
-            "type": "number",
-            "description": "余额"
-          },
-          "tag": {
-            "type": "string",
-            "description": "标签"
-          },
-          "disabled": {
-            "type": "boolean",
-            "description": "是否禁用"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "BearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "description": "在请求头中添加 'Authorization: Bearer {token}' 进行认证"
-      },
-      "SessionAuth": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "session",
-        "description": "通过会话Cookie进行认证"
+        },
+        "summary": "发送邮箱验证",
+        "tags": [
+          "账户验证"
+        ]
       }
     }
   },
@@ -697,5 +4265,11 @@
     {
       "SessionAuth": []
     }
+  ],
+  "servers": [
+    {
+      "description": "本地开发服务器",
+      "url": "http://localhost:3000/api"
+    }
   ]
-} 
+}
