@@ -20,9 +20,9 @@ func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	// Swagger文档路由
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	// 其他路由设置
-	SetWebRouter(router, buildFS, indexPage)
+	// 业务路由
 	SetApiRouter(router)
+	SetDashboardRouter(router)
 	SetRelayRouter(router)
 	SetVideoRouter(router)
 	frontendBaseUrl := os.Getenv("FRONTEND_BASE_URL")
@@ -38,5 +38,4 @@ func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 			c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("%s%s", frontendBaseUrl, c.Request.RequestURI))
 		})
 	}
-	SetDashboardRouter(router)
 }
