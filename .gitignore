@@ -11,3 +11,6 @@ web/dist
 one-api
 .DS_Store
 tiktoken_cache
+/go.sum
+/bin/swagger-generator
+/web/public/swagger

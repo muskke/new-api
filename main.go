@@ -27,7 +27,6 @@ import (
 	"one-api/common"
 	"one-api/constant"
 	"one-api/controller"
-	_ "one-api/docs" // swagger docs
 	"one-api/middleware"
 	"one-api/model"
 	"one-api/router"
