@@ -1,35 +1,39 @@
-FRONTEND_DIR = ./web
-BACKEND_DIR = .
+FROM oven/bun:latest AS builder
 
-.PHONY: all build-frontend start-backend generate-swagger swagger-docs
+WORKDIR /build
+COPY web/package.json .
+RUN bun install
+COPY ./web .
+COPY ./VERSION .
+RUN DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat VERSION) bun run build
 
-all: build-frontend start-backend
+FROM golang:alpine AS builder2
 
-build-frontend:
-	@echo "Building frontend..."
-	@cd $(FRONTEND_DIR) && bun install && DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat VERSION) bun run build
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOPROXY=https://goproxy.cn,https://goproxy.org,https://goproxy.io,https://proxy.golang.com.cn,https://mirrors.aliyun.com/goproxy/,https://goproxy.qiniu.com,https://repo.huaweicloud.com/go/proxy/,https://proxy.golang.org,direct
 
-start-backend:
-	@echo "Starting backend dev server..."
-	@cd $(BACKEND_DIR) && go run main.go &
+WORKDIR /build
 
-# 编译生成OpenAPI文档工具
-build-swagger-tool:
-	@echo "Building swagger document generator..."
-	@cd $(BACKEND_DIR) && go build -o bin/swagger-generator docs/generate_swagger.go
+ADD go.mod go.sum ./
+RUN go mod download
 
-# 运行文档生成工具
-generate-swagger: build-swagger-tool
-	@echo "Generating OpenAPI 3.0 documents..."
-	@mkdir -p web/public/swagger
-	@mkdir -p docs/swagger
-	@bin/swagger-generator
-	@echo "OpenAPI 3.0 documentation generated successfully"
+COPY . .
+COPY --from=builder /build/dist ./web/dist
+RUN go build -ldflags "-s -w -X 'one-api/common.Version=$(cat VERSION)'" -o one-api
 
-# 一键生成OpenAPI文档并启动服务
-swagger-docs: generate-swagger start-backend
-	@echo "OpenAPI documentation is available at http://localhost:3000/swagger/index.html"
+FROM alpine
 
-# 生成文档并重新构建前端（完整构建）
-build-with-docs: generate-swagger build-frontend start-backend
-	@echo "Build completed with OpenAPI documentation"
+# 增加为阿里云等镜像源（阿里云国内最快）
+# https://mirrors.aliyun.com/alpine/|https://mirrors.ustc.edu.cn/alpine/|https://repo.huaweicloud.com/alpine/|https://mirrors.tuna.tsinghua.edu.cn/alpine/
+RUN sed -i 's|https://dl-cdn.alpinelinux.org/alpine/|https://mirrors.aliyun.com/alpine/|g' /etc/apk/repositories \
+    && apk update --no-cache \
+    && apk upgrade --no-cache \
+    && apk add --no-cache ca-certificates tzdata ffmpeg \
+    && update-ca-certificates    
+
+COPY --from=builder2 /build/one-api /
+EXPOSE 3000
+WORKDIR /data
+ENTRYPOINT ["/one-api"]
